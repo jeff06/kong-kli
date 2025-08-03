@@ -10,7 +10,7 @@ import (
 
 var CmdGet = &cobra.Command{
 	Use:   "get",
-	Short: "Get a list of consumers or just one by id",
+	Short: "List all Consumers or Get a Consumer using ID or username.",
 	Long:  ``,
 	Run: func(cmd *cobra.Command, args []string) {
 		server, _ := cmd.Flags().GetString("server")
@@ -26,7 +26,12 @@ var CmdGet = &cobra.Command{
 
 		resp := util.Execute(cmd, baseUrl, "GET", queryParam, nil)
 
-		defer resp.Body.Close()
+		defer func(Body io.ReadCloser) {
+			err := Body.Close()
+			if err != nil {
+				fmt.Println(err)
+			}
+		}(resp.Body)
 		body, _ := io.ReadAll(resp.Body)
 		fmt.Println(resp.Status)
 		fmt.Println(string(body))
@@ -34,7 +39,7 @@ var CmdGet = &cobra.Command{
 }
 
 func init() {
-	CmdGet.Flags().StringP("consumerId", "m", "", "Offset from which to return the next set of resources. Use the value of the ‘offset’ field from the response of a list operation as input here to paginate through all the resources")
+	CmdGet.Flags().StringP("consumerId", "m", "", "ID of the Consumer to lookup")
 	CmdGet.Flags().IntP("size", "z", 100, "Number of resources to be returned.")
 	CmdGet.Flags().StringP("offset", "o", "", "Offset from which to return the next set of resources. Use the value of the ‘offset’ field from the response of a list operation as input here to paginate through all the resources")
 	CmdGet.Flags().StringP("tags", "g", "", "A list of tags to filter the list of resources on. Multiple tags can be concatenated using ‘,’ to mean AND or using ‘/’ to mean OR.")

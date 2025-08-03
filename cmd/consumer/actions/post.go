@@ -6,6 +6,7 @@ import (
 	"io"
 	"kong-kli/util"
 	"net/url"
+	"strings"
 )
 
 var CmdPost = &cobra.Command{
@@ -18,11 +19,21 @@ var CmdPost = &cobra.Command{
 		prebuildUrl := fmt.Sprintf("https://%s/control-planes/%s/core-entities/consumers", server, controlPlaneId)
 		baseUrl, _ := url.Parse(prebuildUrl)
 
-		body := map[string]string{}
-		body["custom_id"], _ = cmd.Flags().GetString("custom_id")
-		body["id"], _ = cmd.Flags().GetString("id")
-		body["tags"], _ = cmd.Flags().GetString("tags")
-		body["username"], _ = cmd.Flags().GetString("username")
+		body := make(map[string]interface{})
+
+		bodyElement := []string{"custom_id", "id", "username"}
+
+		for _, x := range bodyElement {
+			element, _ := cmd.Flags().GetString(x)
+			if element != "" {
+				body[x] = element
+			}
+		}
+
+		tagsStr, _ := cmd.Flags().GetString("tags")
+		if tagsStr != "" {
+			body["tags"] = strings.Split(tagsStr, ",")
+		}
 
 		resp := util.Execute(cmd, baseUrl, "POST", nil, body)
 

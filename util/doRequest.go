@@ -9,7 +9,7 @@ import (
 	"net/url"
 )
 
-func Execute(cmd *cobra.Command, baseUrl *url.URL, verbs string, queryParameters map[string]interface{}, body map[string]string) *http.Response {
+func Execute(cmd *cobra.Command, baseUrl *url.URL, verbs string, queryParameters map[string]interface{}, body map[string]interface{}) *http.Response {
 	queryParams := baseUrl.Query()
 
 	token, _ := cmd.Flags().GetString("token")

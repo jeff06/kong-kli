@@ -2,7 +2,8 @@ package cmd
 
 import (
 	"github.com/spf13/cobra"
-	"kong-kli/cmd/consumer"
+	"kong-kli/cmd/consumers"
+	"kong-kli/cmd/plugins"
 )
 
 var (
@@ -30,5 +31,5 @@ func init() {
 	rootCmd.PersistentFlags().StringP("controlPlaneId", "c", "", "The id of the control plane targeted")
 	rootCmd.MarkFlagRequired("controlPlaneId")
 
-	rootCmd.AddCommand(consumer.CmdConsumer)
+	rootCmd.AddCommand(consumers.CmdConsumer)
 }

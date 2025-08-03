@@ -1,4 +1,4 @@
-package actions
+package consumers_sub
 
 import (
 	"fmt"

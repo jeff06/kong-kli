@@ -23,8 +23,12 @@ func Execute() error {
 func init() {
 	rootCmd.PersistentFlags().StringP("token", "t", "", "Kong token to use for authentication")
 	rootCmd.MarkPersistentFlagRequired("token")
+
 	rootCmd.PersistentFlags().StringP("server", "s", "", "Kong Konnect Server")
 	rootCmd.MarkPersistentFlagRequired("server")
+
+	rootCmd.PersistentFlags().StringP("controlPlaneId", "c", "", "The id of the control plane targeted")
+	rootCmd.MarkFlagRequired("controlPlaneId")
 
 	rootCmd.AddCommand(consumer.CmdConsumer)
 }

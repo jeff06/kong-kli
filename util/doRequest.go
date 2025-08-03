@@ -1,19 +1,21 @@
 package util
 
 import (
+	"bytes"
+	"encoding/json"
 	"fmt"
 	"github.com/spf13/cobra"
 	"net/http"
 	"net/url"
 )
 
-func Execute(cmd *cobra.Command, baseUrl *url.URL, param map[string]interface{}) *http.Response {
+func Execute(cmd *cobra.Command, baseUrl *url.URL, verbs string, queryParameters map[string]interface{}, body map[string]interface{}) *http.Response {
 	queryParams := baseUrl.Query()
 
 	token, _ := cmd.Flags().GetString("token")
 	bearer := fmt.Sprintf("Bearer %s", token)
 
-	for key, value := range param {
+	for key, value := range queryParameters {
 		if value != nil && value != "" {
 			queryParams.Add(key, fmt.Sprintf("%v", value))
 		}
@@ -21,7 +23,13 @@ func Execute(cmd *cobra.Command, baseUrl *url.URL, param map[string]interface{})
 
 	baseUrl.RawQuery = queryParams.Encode()
 
-	req, err := http.NewRequest("GET", baseUrl.String(), nil)
+	jsonData, err := json.Marshal(body)
+	if err != nil {
+		fmt.Println("Error marshaling JSON:", err)
+		return nil
+	}
+
+	req, err := http.NewRequest(verbs, baseUrl.String(), bytes.NewBuffer(jsonData))
 	if err != nil {
 		fmt.Println("Error creating request:", err)
 		return nil

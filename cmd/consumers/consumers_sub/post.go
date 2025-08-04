@@ -45,8 +45,8 @@ var CmdPost = &cobra.Command{
 }
 
 func init() {
-	CmdPost.Flags().StringP("custom_id", "m", "", "created_at")
-	CmdPost.Flags().StringP("id", "i", "", "created_at")
-	CmdPost.Flags().StringP("tags", "g", "", "created_at")
-	CmdPost.Flags().StringP("username", "u", "", "created_at")
+	CmdPost.Flags().StringP("custom_id", "m", "", "Field for storing an existing unique ID for the Consumer - useful for mapping Kong with users in your existing database. You must send either this field or username with the request.")
+	CmdPost.Flags().StringP("id", "i", "", "Id")
+	CmdPost.Flags().StringP("tags", "g", "", "An optional set of strings associated with the Consumer for grouping and filtering.")
+	CmdPost.Flags().StringP("username", "u", "", "The unique username of the Consumer. You must send either this field or custom_id with the request.")
 }

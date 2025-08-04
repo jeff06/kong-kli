@@ -2,8 +2,8 @@ package cmd
 
 import (
 	"github.com/spf13/cobra"
+	"kong-kli/cmd/consumer_groups"
 	"kong-kli/cmd/consumers"
-	"kong-kli/cmd/plugins"
 )
 
 var (
@@ -32,4 +32,5 @@ func init() {
 	rootCmd.MarkFlagRequired("controlPlaneId")
 
 	rootCmd.AddCommand(consumers.CmdConsumer)
+	rootCmd.AddCommand(consumer_groups.CmdConsumerGroups)
 }

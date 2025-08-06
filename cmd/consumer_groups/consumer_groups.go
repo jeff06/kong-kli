@@ -2,6 +2,7 @@ package consumer_groups
 
 import (
 	"github.com/spf13/cobra"
+	"kong-kli/cmd/consumer_groups/consumer_groups_consumers"
 	"kong-kli/cmd/consumer_groups/consumer_groups_sub"
 )
 
@@ -18,4 +19,5 @@ func init() {
 	CmdConsumerGroups.AddCommand(consumer_groups_sub.CmdPost)
 	CmdConsumerGroups.AddCommand(consumer_groups_sub.CmdDelete)
 	CmdConsumerGroups.AddCommand(consumer_groups_sub.CmdPut)
+	CmdConsumerGroups.AddCommand(consumer_groups_consumers.CmdConsumerGroupsConsumers)
 }

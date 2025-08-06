@@ -39,6 +39,6 @@ var CmdPost = &cobra.Command{
 }
 
 func init() {
-	CmdPost.Flags().StringP("name", "u", "", "created_at")
+	CmdPost.Flags().StringP("name", "n", "", "")
 	CmdPost.MarkFlagRequired("name")
 }

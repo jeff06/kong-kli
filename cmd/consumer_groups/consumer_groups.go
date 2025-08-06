@@ -16,4 +16,6 @@ var CmdConsumerGroups = &cobra.Command{
 func init() {
 	CmdConsumerGroups.AddCommand(consumer_groups_sub.CmdGet)
 	CmdConsumerGroups.AddCommand(consumer_groups_sub.CmdPost)
+	CmdConsumerGroups.AddCommand(consumer_groups_sub.CmdDelete)
+	CmdConsumerGroups.AddCommand(consumer_groups_sub.CmdPut)
 }
